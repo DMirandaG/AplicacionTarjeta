@@ -41,15 +41,27 @@ public class PresentadorTarjeta implements IPresentadorTarjeta {
         @SuppressWarnings("unchecked")
         @Override
         public void onReceive(Context context, Intent intent) {
-            AppMediador appMediador = AppMediador.getInstance();
-            Bundle bundle = intent.getExtras();
-            if (bundle != null){
+            //AppMediador appMediador = AppMediador.getInstance();
+            //Bundle bundle = intent.getExtras();
+            if (intent.getAction().equals(AppMediador.AVISO_NUEVA_INFORMACION)){
                 //ArrayList<InfoTemperatura> datos = (ArrayList<InfoTemperatura>)intent.getSerializableExtra(AppMediador.CLAVE_INFORMACION);
-                Object[] datos = (Object[])intent.getSerializableExtra(AppMediador.CLAVE_INFORMACION);
-                iVistaTarjeta.actualizarInformacion(datos);
-                appMediador.unRegisterReceiver(this);
-
+                //Object[] datos = (Object[])intent.getSerializableExtra(AppMediador.CLAVE_INFORMACION);
+               // iVistaTarjeta.actualizarInformacion(datos);
+                InfoTemperatura infoTemperatura = (InfoTemperatura) intent.getSerializableExtra(AppMediador.CLAVE_INFORMACION);
+                if(infoTemperatura != null){
+                    Object[] datos = new Object[7];
+                    datos[0] = infoTemperatura.getCiudad();
+                    datos[1] = infoTemperatura.getTempMedia();
+                    datos[2] = infoTemperatura.getPresion();
+                    datos[3] = infoTemperatura.getHumedad();
+                    datos[4] = infoTemperatura.getVelViento();
+                    datos[5] = infoTemperatura.getDirViento();
+                    datos[6] = infoTemperatura.getTipoTiempo();
+                    appMediador.getVistaMapa().actualizarInformacion(datos);
+                }
             }
+            appMediador.unRegisterReceiver(this);
+
         }
     };
 
