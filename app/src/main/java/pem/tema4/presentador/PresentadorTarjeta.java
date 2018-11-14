@@ -20,9 +20,6 @@ public class PresentadorTarjeta implements IPresentadorTarjeta {
 
     private static AppMediador appMediador;
     private static IModelo iModelo;
-    private IVistaTarjeta iVistaTarjeta;
-
-
 
 
     // TODO Declare y cree un receptor de avisos para que atienda al aviso AVISO_NUEVA_INFORMACION. Al recibir este aviso
@@ -42,7 +39,6 @@ public class PresentadorTarjeta implements IPresentadorTarjeta {
         @Override
         public void onReceive(Context context, Intent intent) {
             if (intent.getAction().equals(AppMediador.AVISO_NUEVA_INFORMACION)){
-
                 InfoTemperatura infoTemperatura = (InfoTemperatura) intent.getSerializableExtra(AppMediador.CLAVE_INFORMACION);
                 if(infoTemperatura != null){
                     Object[] datos = new Object[7];
@@ -57,7 +53,6 @@ public class PresentadorTarjeta implements IPresentadorTarjeta {
                 }
             }
             appMediador.unRegisterReceiver(this);
-
         }
     };
 
@@ -69,7 +64,6 @@ public class PresentadorTarjeta implements IPresentadorTarjeta {
     public PresentadorTarjeta() {
         appMediador = AppMediador.getInstance();
         iModelo = Modelo.getInstance();
-        iVistaTarjeta = appMediador.getVistaMapa();
     }
 
     // TODO Método redefinido actualizarTarjetas que inicia la aplicación, recibiendo desde el GPS la ubicación del terminal
